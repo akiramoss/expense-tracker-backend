@@ -3,6 +3,7 @@ package com.akiramoss.expense_tracker.controller;
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.service.ExpenseService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -3,7 +3,6 @@ package com.akiramoss.expense_tracker.service;
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.repository.ExpenseRepository;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
