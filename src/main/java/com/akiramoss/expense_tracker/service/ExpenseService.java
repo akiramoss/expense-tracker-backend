@@ -1,6 +1,8 @@
 package com.akiramoss.expense_tracker.service;
 
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
+import com.akiramoss.expense_tracker.dto.ExpenseResponseDTO;
+import com.akiramoss.expense_tracker.mapper.ExpenseMapper;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,7 @@ public class ExpenseService {
         this.expenseRepository = expenseRepository;
     }
 
-    public Expense createExpense(ExpenseRequestDTO dto) {
+    public ExpenseResponseDTO createExpense(ExpenseRequestDTO dto) {
 
         Expense expense = Expense.builder()
                 .amount(dto.getAmount())
@@ -27,16 +29,22 @@ public class ExpenseService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        return expenseRepository.save(expense);
+        Expense saved = expenseRepository.save(expense);
+
+        return ExpenseMapper.toDTO(saved);
     }
 
-    public List<Expense> getAllExpenses() {
-        return expenseRepository.findAll();
+    public List<ExpenseResponseDTO> getAllExpenses() {
+        return expenseRepository.findAll()
+                .stream()
+                .map(ExpenseMapper::toDTO)
+                .toList();
     }
 
-    public List<Expense> getExpensesByCategory(String category) {
-        return expenseRepository.findByCategory(category);
+    public List<ExpenseResponseDTO> getExpensesByCategory(String category) {
+        return expenseRepository.findByCategory(category)
+                .stream()
+                .map(ExpenseMapper::toDTO)
+                .toList();
     }
-
-
 }
