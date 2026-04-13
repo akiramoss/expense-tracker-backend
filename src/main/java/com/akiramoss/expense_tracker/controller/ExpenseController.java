@@ -1,5 +1,6 @@
 package com.akiramoss.expense_tracker.controller;
 
+import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.service.ExpenseService;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ public class ExpenseController {
     }
 
     @PostMapping
-    public Expense createExpense(@RequestBody Expense expense) {
-        return expenseService.createExpense(expense);
+    public Expense createExpense(@Valid @RequestBody ExpenseRequestDTO dto) {
+        return expenseService.createExpense(dto);
     }
 
     @GetMapping

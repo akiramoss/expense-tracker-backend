@@ -1,7 +1,9 @@
 package com.akiramoss.expense_tracker.service;
 
+import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.repository.ExpenseRepository;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,13 +18,15 @@ public class ExpenseService {
         this.expenseRepository = expenseRepository;
     }
 
-    public Expense createExpense(Expense expense) {
+    public Expense createExpense(ExpenseRequestDTO dto) {
 
-        if (expense.getAmount().doubleValue() <= 0) {
-            throw new IllegalArgumentException("Amount must be greater than 0");
-        }
-
-        expense.setCreatedAt(LocalDateTime.now());
+        Expense expense = Expense.builder()
+                .amount(dto.getAmount())
+                .category(dto.getCategory())
+                .description(dto.getDescription())
+                .date(dto.getDate())
+                .createdAt(LocalDateTime.now())
+                .build();
 
         return expenseRepository.save(expense);
     }
