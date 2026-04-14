@@ -1,9 +1,8 @@
-package com.akiramoss.expense_tracker.Service;
+package com.akiramoss.expense_tracker.service;
 
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.repository.ExpenseRepository;
-import com.akiramoss.expense_tracker.service.ExpenseService;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

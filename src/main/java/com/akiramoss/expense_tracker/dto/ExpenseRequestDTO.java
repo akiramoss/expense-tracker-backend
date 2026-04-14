@@ -6,6 +6,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+// Entrada del usuario
 @Data
 public class ExpenseRequestDTO {
 

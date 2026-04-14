@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenAPIConfig {
 
-    @Bean
+    @Bean // Objeto que se utiliza como configuraciñon global del Swagger
     public OpenAPI expenseTrackerAPI() {
         return new OpenAPI()
                 .info(new Info()

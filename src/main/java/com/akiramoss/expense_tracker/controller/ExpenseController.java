@@ -22,6 +22,12 @@ public class ExpenseController {
         this.expenseService = expenseService;
     }
 
+    /**
+     * 1 - Recibe JSON
+     * 2 - Lo convierte en DTO
+     * 3 - Llama al service
+     * 4 - Devuelve una respuesta
+     **/
     @Operation(summary = "Create a new expense")
     @PostMapping
     public ApiResponse<ExpenseResponseDTO> createExpense(@Valid @RequestBody ExpenseRequestDTO dto) {
