@@ -17,6 +17,7 @@ class ExpenseRequestDTOTest {
 
     private Validator validator;
 
+    // Ejecución previa a cada test
     @BeforeEach
     void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
