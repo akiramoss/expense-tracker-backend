@@ -29,13 +29,13 @@ class ExpenseControllerTest {
     void shouldReturn200WhenCreatingExpense() throws Exception {
 
         String json = """
-        {
-          "amount": 20,
-          "category": "food",
-          "description": "pizza",
-          "date": "2026-04-13"
-        }
-        """;
+                {
+                  "amount": 20,
+                  "category": "food",
+                  "description": "pizza",
+                  "date": "2026-04-13"
+                }
+                """;
 
         mockMvc.perform(post("/api/expenses")
                         .contentType(MediaType.APPLICATION_JSON)

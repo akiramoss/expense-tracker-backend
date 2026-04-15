@@ -2,9 +2,8 @@ package com.akiramoss.expense_tracker.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -13,21 +12,21 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "expenses")
-public class Expense {
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal amount;
+    @Column(nullable = false, unique = true)
+    private String username;
 
-    private String category;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    private String description;
+    @Column(nullable = false)
+    private String password;
 
-    private LocalDate date;
-
-    @Column(name = "created_at")
     private LocalDateTime createdAt;
 }
