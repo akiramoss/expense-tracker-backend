@@ -47,4 +47,11 @@ public class ExpenseService {
                 .map(ExpenseMapper::toDTO)
                 .toList();
     }
+
+    public List<ExpenseResponseDTO> getExpensesByUser(Long userId) {
+        return expenseRepository.findByUserId(userId)
+                .stream()
+                .map(ExpenseMapper::toDTO)
+                .toList();
+    }
 }

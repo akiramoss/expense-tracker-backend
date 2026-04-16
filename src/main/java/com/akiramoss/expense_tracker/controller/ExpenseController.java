@@ -52,4 +52,9 @@ public class ExpenseController {
     public List<ExpenseResponseDTO> getByCategory(@RequestParam String category) {
         return expenseService.getExpensesByCategory(category);
     }
+
+    @GetMapping("/user/{userId}")
+    public List<ExpenseResponseDTO> getByUser(@PathVariable Long userId) {
+        return expenseService.getExpensesByUser(userId);
+    }
 }
