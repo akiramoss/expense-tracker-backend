@@ -70,4 +70,11 @@ public class ExpenseService {
                 .map(ExpenseMapper::toDTO)
                 .toList();
     }
+
+    public List<ExpenseResponseDTO> getByGroup(Long groupId) {
+        return expenseRepository.findByGroupId(groupId)
+                .stream()
+                .map(ExpenseMapper::toDTO)
+                .toList();
+    }
 }

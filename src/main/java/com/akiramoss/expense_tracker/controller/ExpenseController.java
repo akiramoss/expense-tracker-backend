@@ -57,4 +57,9 @@ public class ExpenseController {
     public List<ExpenseResponseDTO> getByUser(@PathVariable Long userId) {
         return expenseService.getExpensesByUser(userId);
     }
+
+    @GetMapping("/group/{groupId}")
+    public List<ExpenseResponseDTO> getByGroup(@PathVariable Long groupId) {
+        return expenseService.getByGroup(groupId);
+    }
 }
