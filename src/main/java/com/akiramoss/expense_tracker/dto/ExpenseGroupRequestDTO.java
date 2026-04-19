@@ -3,7 +3,7 @@ package com.akiramoss.expense_tracker.dto;
 import lombok.Data;
 
 @Data
-public class ExpenseGroupRequest {
+public class ExpenseGroupRequestDTO {
 
     private String name;
 
