@@ -36,4 +36,8 @@ public class Expense {
     private User user;
 
     private String paymentMethod;
+
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private ExpenseGroup group;
 }
