@@ -22,4 +22,10 @@ public class ExpenseRequestDTO {
 
     @NotNull(message = "Date is required")
     private LocalDate date;
+
+    private Long userId;
+
+    private Long groupId;
+
+    private String paymentMethod;
 }
