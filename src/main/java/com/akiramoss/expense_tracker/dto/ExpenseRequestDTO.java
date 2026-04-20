@@ -1,6 +1,6 @@
 package com.akiramoss.expense_tracker.dto;
 
-import io.micrometer.common.lang.Nullable;
+import com.akiramoss.expense_tracker.enums.ExpenseCategory;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -15,8 +15,7 @@ public class ExpenseRequestDTO {
     @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
     private BigDecimal amount;
 
-    @NotBlank(message = "Category is required")
-    private String category;
+    private ExpenseCategory expenseCategory;
 
     @Size(max = 255, message = "Description too long")
     private String description;
@@ -26,7 +25,6 @@ public class ExpenseRequestDTO {
 
     private Long userId;
 
-    @Nullable
     private Long groupId;
 
     private String paymentMethod;

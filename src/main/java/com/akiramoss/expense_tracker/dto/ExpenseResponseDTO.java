@@ -23,4 +23,10 @@ public class ExpenseResponseDTO {
     private LocalDate date;
 
     private LocalDateTime createdAt;
+
+    private Long userId;
+
+    private Long groupId;
+
+    private String paymentMethod;
 }
