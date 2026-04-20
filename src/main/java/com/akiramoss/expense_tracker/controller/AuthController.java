@@ -20,7 +20,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequestDTO dto) {
+    public ResponseDTO register(@RequestBody RegisterRequestDTO dto) {
         return userService.register(dto);
     }
 
