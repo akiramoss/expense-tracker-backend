@@ -34,8 +34,12 @@ public class ExpenseService {
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        ExpenseGroup group = groupRepository.findById(dto.getGroupId())
-                .orElseThrow(() -> new RuntimeException("Group not found"));
+        ExpenseGroup group = null;
+
+        if(dto.getGroupId() != null){
+            group =  groupRepository.findById(dto.getGroupId())
+                    .orElseThrow(() -> new RuntimeException("Group not found"));
+        }
 
         Expense expense = Expense.builder()
                 .amount(dto.getAmount())

@@ -1,5 +1,6 @@
 package com.akiramoss.expense_tracker.dto;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -25,6 +26,7 @@ public class ExpenseRequestDTO {
 
     private Long userId;
 
+    @Nullable
     private Long groupId;
 
     private String paymentMethod;

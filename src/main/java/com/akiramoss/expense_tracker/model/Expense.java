@@ -31,13 +31,13 @@ public class Expense {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
     private String paymentMethod;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     @JoinColumn(name = "group_id")
     private ExpenseGroup group;
 }

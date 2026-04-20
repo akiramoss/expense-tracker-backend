@@ -79,4 +79,9 @@ class ExpenseServiceTest {
         verify(groupRepository, times(1)).findById(1L);
         verify(expenseRepository, times(1)).save(any(Expense.class));
     }
+
+    @Test
+    void shouldSplitExpenseCorrectly() {
+        // validar que guarda shares para participantes
+    }
 }
