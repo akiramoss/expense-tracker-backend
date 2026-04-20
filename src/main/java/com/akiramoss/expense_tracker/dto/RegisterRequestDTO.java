@@ -9,11 +9,13 @@ import lombok.Data;
 public class RegisterRequestDTO {
 
     @NotBlank
+    @Size(min = 3, max = 30)
     private String username;
 
     @Email
+    @NotBlank
     private String email;
 
-    @Size(min = 8)
+    @Size(min = 8, max = 60)
     private String password;
 }
