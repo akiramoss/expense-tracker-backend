@@ -9,38 +9,26 @@ import com.akiramoss.expense_tracker.model.User;
 import com.akiramoss.expense_tracker.repository.ExpenseGroupRepository;
 import com.akiramoss.expense_tracker.repository.ExpenseRepository;
 import com.akiramoss.expense_tracker.repository.UserRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ExpenseService {
 
     private final ExpenseRepository expenseRepository;
     private final UserRepository userRepository;
     private final ExpenseGroupRepository groupRepository;
 
-    public ExpenseService(ExpenseRepository expenseRepository,
-                          UserRepository userRepository, ExpenseGroupRepository groupRepository) {
-        this.expenseRepository = expenseRepository;
-        this.userRepository = userRepository;
-        this.groupRepository = groupRepository;
-    }
-
+    @Transactional
     public ExpenseResponseDTO createExpense(ExpenseRequestDTO dto) {
 
-
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        ExpenseGroup group = null;
-
-        if(dto.getGroupId() != null){
-            group =  groupRepository.findById(dto.getGroupId())
-                    .orElseThrow(() -> new RuntimeException("Group not found"));
-        }
+        User user = findUserById(dto.getUserId());
+        ExpenseGroup group = findGroupIfPresent(dto.getGroupId());
 
         Expense expense = Expense.builder()
                 .amount(dto.getAmount())
@@ -48,11 +36,14 @@ public class ExpenseService {
                 .description(dto.getDescription())
                 .date(dto.getDate())
                 .createdAt(LocalDateTime.now())
+                .paymentMethod(dto.getPaymentMethod())
                 .user(user)
                 .group(group)
                 .build();
 
-        return ExpenseMapper.toDTO(expenseRepository.save(expense));
+        Expense savedExpense = expenseRepository.save(expense);
+
+        return ExpenseMapper.toDTO(savedExpense);
     }
 
     public List<ExpenseResponseDTO> getAllExpenses() {
@@ -76,10 +67,25 @@ public class ExpenseService {
                 .toList();
     }
 
-    public List<ExpenseResponseDTO> getByGroup(Long groupId) {
+    public List<ExpenseResponseDTO> getExpensesByGroup(Long groupId) {
         return expenseRepository.findByGroupId(groupId)
                 .stream()
                 .map(ExpenseMapper::toDTO)
                 .toList();
+    }
+
+    private User findUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    private ExpenseGroup findGroupIfPresent(Long groupId) {
+
+        if (groupId == null) {
+            return null;
+        }
+
+        return groupRepository.findById(groupId)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
     }
 }
