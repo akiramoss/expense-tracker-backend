@@ -3,7 +3,10 @@ package com.akiramoss.expense_tracker.controller;
 import com.akiramoss.expense_tracker.dto.ApiResponse;
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.dto.ExpenseResponseDTO;
+import com.akiramoss.expense_tracker.dto.SplitExpenseRequestDTO;
+import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.service.ExpenseService;
+import com.akiramoss.expense_tracker.service.ExpenseShareService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -17,9 +20,11 @@ import java.util.List;
 public class ExpenseController {
 
     private final ExpenseService expenseService;
+    private final ExpenseShareService expenseShareService;
 
-    public ExpenseController(ExpenseService expenseService) {
+    public ExpenseController(ExpenseService expenseService,  ExpenseShareService expenseShareService) {
         this.expenseService = expenseService;
+        this.expenseShareService = expenseShareService;
     }
 
     /**
@@ -61,5 +66,10 @@ public class ExpenseController {
     @GetMapping("/group/{groupId}")
     public List<ExpenseResponseDTO> getByGroup(@PathVariable Long groupId) {
         return expenseService.getByGroup(groupId);
+    }
+
+    @PostMapping("/split")
+    public Expense splitExpense(@RequestBody SplitExpenseRequestDTO dto) {
+        return expenseShareService.splitExpense(dto);
     }
 }
