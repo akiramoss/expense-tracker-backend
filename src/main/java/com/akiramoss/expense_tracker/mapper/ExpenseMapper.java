@@ -5,9 +5,18 @@ import com.akiramoss.expense_tracker.model.Expense;
 
 // Convertimos Entity en DTO
 // Adapter patter
-public class ExpenseMapper {
+public final class ExpenseMapper {
+
+    private ExpenseMapper() {
+
+    }
 
     public static ExpenseResponseDTO toDTO(Expense expense) {
+
+        if (expense == null) {
+            return null;
+        }
+
         // Transformamos la entidad "Expense" en un DTO con builder()
         return ExpenseResponseDTO.builder()
                 .id(expense.getId())

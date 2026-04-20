@@ -9,6 +9,7 @@ import com.akiramoss.expense_tracker.model.User;
 import com.akiramoss.expense_tracker.repository.ExpenseGroupRepository;
 import com.akiramoss.expense_tracker.repository.ExpenseRepository;
 import com.akiramoss.expense_tracker.repository.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,7 +33,7 @@ public class ExpenseService {
 
 
         User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         ExpenseGroup group = null;
 
@@ -43,7 +44,7 @@ public class ExpenseService {
 
         Expense expense = Expense.builder()
                 .amount(dto.getAmount())
-                .category(dto.getCategory())
+                .category(dto.getExpenseCategory().name())
                 .description(dto.getDescription())
                 .date(dto.getDate())
                 .createdAt(LocalDateTime.now())
