@@ -4,6 +4,7 @@ import com.akiramoss.expense_tracker.dto.ApiResponse;
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.dto.ExpenseResponseDTO;
 import com.akiramoss.expense_tracker.dto.SplitExpenseRequestDTO;
+import com.akiramoss.expense_tracker.mapper.ExpenseMapper;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.service.ExpenseService;
 import com.akiramoss.expense_tracker.service.ExpenseShareService;
@@ -68,9 +69,16 @@ public class ExpenseController {
 
     @Operation(summary = "Create shared split expense")
     @PostMapping("/split")
-    public Expense splitExpense(
+    public ApiResponse<ExpenseResponseDTO> splitExpense(
             @RequestBody SplitExpenseRequestDTO dto) {
 
-        return expenseShareService.splitExpense(dto);
+        ExpenseResponseDTO result =
+                ExpenseMapper.toDTO(expenseShareService.splitExpense(dto));
+
+        return ApiResponse.<ExpenseResponseDTO>builder()
+                .status("success")
+                .message("Split expense created")
+                .data(result)
+                .build();
     }
 }

@@ -1,6 +1,8 @@
 package com.akiramoss.expense_tracker.service;
 
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
+import com.akiramoss.expense_tracker.enums.ExpenseCategory;
+import com.akiramoss.expense_tracker.enums.PaymentMethod;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.model.ExpenseGroup;
 import com.akiramoss.expense_tracker.model.User;
@@ -31,7 +33,7 @@ class ExpenseServiceTest {
         // DTO input
         ExpenseRequestDTO dto = new ExpenseRequestDTO();
         dto.setAmount(BigDecimal.valueOf(20));
-        dto.setCategory("food");
+        dto.setExpenseCategory(ExpenseCategory.valueOf("food"));
         dto.setDescription("pizza");
         dto.setDate(LocalDate.now());
         dto.setUserId(1L);
@@ -54,10 +56,10 @@ class ExpenseServiceTest {
         Expense savedExpense = Expense.builder()
                 .id(1L)
                 .amount(dto.getAmount())
-                .category(dto.getCategory())
+                .category(ExpenseCategory.valueOf(dto.getExpenseCategory().name()))
                 .description(dto.getDescription())
                 .date(dto.getDate())
-                .paymentMethod(dto.getPaymentMethod())
+                .paymentMethod(PaymentMethod.valueOf(dto.getPaymentMethod()))
                 .user(user)
                 .group(group)
                 .build();

@@ -1,6 +1,7 @@
 package com.akiramoss.expense_tracker.mapper;
 
 import com.akiramoss.expense_tracker.dto.ExpenseResponseDTO;
+import com.akiramoss.expense_tracker.enums.ExpenseCategory;
 import com.akiramoss.expense_tracker.model.Expense;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ class ExpenseMapperTest {
         Expense expense = Expense.builder()
                 .id(1L)
                 .amount(BigDecimal.valueOf(50))
-                .category("food")
+                .category(ExpenseCategory.valueOf("food"))
                 .description("pizza")
                 .date(LocalDate.now())
                 .createdAt(LocalDateTime.now())

@@ -1,5 +1,6 @@
 package com.akiramoss.expense_tracker.dto;
 
+import com.akiramoss.expense_tracker.enums.ExpenseCategory;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -28,7 +29,7 @@ class ExpenseRequestDTOTest {
     void shouldFailWhenAmountIsZero() {
         ExpenseRequestDTO dto = new ExpenseRequestDTO();
         dto.setAmount(BigDecimal.ZERO);
-        dto.setCategory("food");
+        dto.setExpenseCategory(ExpenseCategory.valueOf("food"));
         dto.setDate(LocalDate.now());
 
         Set<ConstraintViolation<ExpenseRequestDTO>> violations = validator.validate(dto);
@@ -40,7 +41,7 @@ class ExpenseRequestDTOTest {
     void shouldFailWhenCategoryIsBlank() {
         ExpenseRequestDTO dto = new ExpenseRequestDTO();
         dto.setAmount(BigDecimal.TEN);
-        dto.setCategory("");
+        dto.setExpenseCategory(ExpenseCategory.valueOf(""));
         dto.setDate(LocalDate.now());
 
         Set<ConstraintViolation<ExpenseRequestDTO>> violations = validator.validate(dto);
@@ -52,7 +53,7 @@ class ExpenseRequestDTOTest {
     void shouldPassWithValidData() {
         ExpenseRequestDTO dto = new ExpenseRequestDTO();
         dto.setAmount(BigDecimal.TEN);
-        dto.setCategory("food");
+        dto.setExpenseCategory(ExpenseCategory.valueOf("food"));
         dto.setDate(LocalDate.now());
 
         Set<ConstraintViolation<ExpenseRequestDTO>> violations = validator.validate(dto);
