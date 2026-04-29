@@ -1,6 +1,7 @@
 package com.akiramoss.expense_tracker.service;
 
 import com.akiramoss.expense_tracker.dto.SplitExpenseRequestDTO;
+import com.akiramoss.expense_tracker.enums.ExpenseType;
 import com.akiramoss.expense_tracker.model.*;
 import com.akiramoss.expense_tracker.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,8 @@ public class ExpenseShareService {
                 .category(dto.getCategory())
                 .description(dto.getDescription())
                 .date(dto.getDate())
-                .createdAt(LocalDateTime.now())
+                .paymentMethod(dto.getPaymentMethod())
+                .type(ExpenseType.SPLIT)
                 .user(payer)
                 .group(group)
                 .build();
