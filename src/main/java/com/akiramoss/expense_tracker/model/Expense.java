@@ -1,6 +1,7 @@
 package com.akiramoss.expense_tracker.model;
 
 import com.akiramoss.expense_tracker.enums.ExpenseCategory;
+import com.akiramoss.expense_tracker.enums.ExpenseType;
 import com.akiramoss.expense_tracker.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,22 +26,32 @@ public class Expense {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
 
+    @Enumerated(EnumType.STRING)
     private ExpenseCategory category;
 
     private String description;
 
     private LocalDate date;
 
-    @Column(name = "created_at")
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    private ExpenseType type;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "group_id")
     private ExpenseGroup group;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
 }
