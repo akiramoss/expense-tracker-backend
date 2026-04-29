@@ -1,5 +1,7 @@
 package com.akiramoss.expense_tracker.dto;
 
+import com.akiramoss.expense_tracker.enums.ExpenseCategory;
+import com.akiramoss.expense_tracker.enums.PaymentMethod;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -11,11 +13,13 @@ public class SplitExpenseRequestDTO {
 
     private BigDecimal amount;
 
-    private String category;
+    private ExpenseCategory category;
 
     private String description;
 
     private LocalDate date;
+
+    private PaymentMethod paymentMethod;
 
     private Long paidByUserId;
 
