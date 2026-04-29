@@ -2,6 +2,8 @@ package com.akiramoss.expense_tracker.service;
 
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.dto.ExpenseResponseDTO;
+import com.akiramoss.expense_tracker.enums.ExpenseType;
+import com.akiramoss.expense_tracker.enums.PaymentMethod;
 import com.akiramoss.expense_tracker.mapper.ExpenseMapper;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.model.ExpenseGroup;
@@ -30,20 +32,22 @@ public class ExpenseService {
         User user = findUserById(dto.getUserId());
         ExpenseGroup group = findGroupIfPresent(dto.getGroupId());
 
+        ExpenseType type = (group == null)
+                ? ExpenseType.PERSONAL
+                : ExpenseType.GROUP;
+
         Expense expense = Expense.builder()
                 .amount(dto.getAmount())
-                .category(dto.getExpenseCategory().name())
+                .category(dto.getExpenseCategory())
                 .description(dto.getDescription())
                 .date(dto.getDate())
                 .createdAt(LocalDateTime.now())
-                .paymentMethod(dto.getPaymentMethod())
+                .paymentMethod(PaymentMethod.valueOf(dto.getPaymentMethod()))
                 .user(user)
                 .group(group)
                 .build();
 
-        Expense savedExpense = expenseRepository.save(expense);
-
-        return ExpenseMapper.toDTO(savedExpense);
+        return ExpenseMapper.toDTO(expenseRepository.save(expense));
     }
 
     public List<ExpenseResponseDTO> getAllExpenses() {
