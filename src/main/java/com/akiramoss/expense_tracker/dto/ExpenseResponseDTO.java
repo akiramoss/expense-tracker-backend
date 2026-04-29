@@ -1,5 +1,7 @@
 package com.akiramoss.expense_tracker.dto;
 
+import com.akiramoss.expense_tracker.enums.ExpenseCategory;
+import com.akiramoss.expense_tracker.enums.ExpenseType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,7 +18,9 @@ public class ExpenseResponseDTO {
 
     private BigDecimal amount;
 
-    private String category;
+    private ExpenseCategory category;
+
+    private ExpenseType type;
 
     private String description;
 

@@ -1,6 +1,8 @@
 package com.akiramoss.expense_tracker.mapper;
 
 import com.akiramoss.expense_tracker.dto.ExpenseResponseDTO;
+import com.akiramoss.expense_tracker.enums.ExpenseCategory;
+import com.akiramoss.expense_tracker.enums.ExpenseType;
 import com.akiramoss.expense_tracker.model.Expense;
 
 // Convertimos Entity en DTO
@@ -21,10 +23,13 @@ public final class ExpenseMapper {
         return ExpenseResponseDTO.builder()
                 .id(expense.getId())
                 .amount(expense.getAmount())
-                .category(expense.getCategory())
+                .category(ExpenseCategory.valueOf(expense.getCategory().name()))
                 .description(expense.getDescription())
                 .date(expense.getDate())
                 .createdAt(expense.getCreatedAt())
+                .userId(expense.getId())
+                .groupId(expense.getGroup() != null ? expense.getGroup().getId() : null)
+                .type(ExpenseType.valueOf(expense.getType().name()))
                 .build();
     }
 }
