@@ -1,5 +1,7 @@
 package com.akiramoss.expense_tracker.model;
 
+import com.akiramoss.expense_tracker.enums.ExpenseCategory;
+import com.akiramoss.expense_tracker.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,8 +25,7 @@ public class Expense {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
 
-    @Enumerated(EnumType.STRING)
-    private String category;
+    private ExpenseCategory category;
 
     private String description;
 
@@ -37,8 +38,7 @@ public class Expense {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    private String paymentMethod;
+    private PaymentMethod paymentMethod;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "group_id")
