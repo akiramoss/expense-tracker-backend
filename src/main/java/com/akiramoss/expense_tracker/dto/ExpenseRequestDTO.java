@@ -12,21 +12,24 @@ import java.time.LocalDate;
 @Data
 public class ExpenseRequestDTO {
 
-    @NotNull(message = "Amount is required")
-    @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
+    @NotNull
+    @DecimalMin(value = "0.01")
     private BigDecimal amount;
 
+    @NotNull
     private ExpenseCategory category;
 
-    @Size(max = 255, message = "Description too long")
+    @Size(max = 255)
     private String description;
 
-    @NotNull(message = "Date is required")
+    @NotNull
     private LocalDate date;
 
+    @NotNull
     private Long userId;
 
     private Long groupId;
 
+    @NotNull
     private PaymentMethod paymentMethod;
 }

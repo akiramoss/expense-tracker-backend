@@ -2,6 +2,7 @@ package com.akiramoss.expense_tracker.dto;
 
 import com.akiramoss.expense_tracker.enums.ExpenseCategory;
 import com.akiramoss.expense_tracker.enums.ExpenseType;
+import com.akiramoss.expense_tracker.enums.PaymentMethod;
 import lombok.Builder;
 import lombok.Data;
 
@@ -32,5 +33,5 @@ public class ExpenseResponseDTO {
 
     private Long groupId;
 
-    private String paymentMethod;
+    private PaymentMethod paymentMethod;
 }
