@@ -21,6 +21,10 @@ public class ExpenseShareService {
 
     public Expense splitExpense(SplitExpenseRequestDTO dto) {
 
+        if (dto.getParticipantIds() == null || dto.getParticipantIds().size() < 2) {
+            throw new RuntimeException("Split requires at least 2 participants");
+        }
+
         User payer = userRepository.findById(dto.getPaidByUserId())
                 .orElseThrow(() -> new RuntimeException("Payer not found"));
 

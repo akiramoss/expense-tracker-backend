@@ -11,17 +11,21 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public PasswordEncoder passwordEndcoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Desactivar seguridad temporalmente
-    // continuar con el desarrollo de JWT
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
+                        .requestMatchers(
+                                "/api/auth/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+                        .anyRequest().permitAll() // 🔥 mantenemos abierto por ahora
                 );
 
         return http.build();

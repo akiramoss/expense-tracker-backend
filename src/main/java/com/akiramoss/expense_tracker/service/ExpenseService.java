@@ -2,6 +2,7 @@ package com.akiramoss.expense_tracker.service;
 
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.dto.ExpenseResponseDTO;
+import com.akiramoss.expense_tracker.enums.ExpenseCategory;
 import com.akiramoss.expense_tracker.enums.ExpenseType;
 import com.akiramoss.expense_tracker.mapper.ExpenseMapper;
 import com.akiramoss.expense_tracker.model.Expense;
@@ -56,7 +57,7 @@ public class ExpenseService {
                 .toList();
     }
 
-    public List<ExpenseResponseDTO> getExpensesByCategory(String category) {
+    public List<ExpenseResponseDTO> getExpensesByCategory(ExpenseCategory category) {
         return expenseRepository.findByCategory(category)
                 .stream()
                 .map(ExpenseMapper::toDTO)

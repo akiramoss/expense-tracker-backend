@@ -16,7 +16,7 @@ public class ExpenseRequestDTO {
     @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
     private BigDecimal amount;
 
-    private ExpenseCategory expenseCategory;
+    private ExpenseCategory category;
 
     @Size(max = 255, message = "Description too long")
     private String description;

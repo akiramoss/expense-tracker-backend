@@ -27,7 +27,7 @@ public final class ExpenseMapper {
                 .description(expense.getDescription())
                 .date(expense.getDate())
                 .createdAt(expense.getCreatedAt())
-                .userId(expense.getId())
+                .userId(expense.getUser().getId())
                 .groupId(expense.getGroup() != null ? expense.getGroup().getId() : null)
                 .type(ExpenseType.valueOf(expense.getType().name()))
                 .build();
