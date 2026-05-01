@@ -15,6 +15,6 @@ public class OpenAPIConfig {
                 .info(new Info()
                         .title("Expense Tracker API")
                         .version("1.0")
-                        .description("API for managing personal expenses with Spring Boot"));
+                        .description("API for managing personal and shared expenses with split functionality"));
     }
 }

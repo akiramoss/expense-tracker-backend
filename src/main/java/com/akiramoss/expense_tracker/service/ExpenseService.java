@@ -38,7 +38,7 @@ public class ExpenseService {
 
         Expense expense = Expense.builder()
                 .amount(dto.getAmount())
-                .category(dto.getExpenseCategory())
+                .category(dto.getCategory())
                 .description(dto.getDescription())
                 .date(dto.getDate())
                 .paymentMethod(dto.getPaymentMethod())
