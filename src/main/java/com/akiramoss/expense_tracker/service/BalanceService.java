@@ -18,29 +18,38 @@ public class BalanceService {
     private final ExpenseRepository expenseRepository;
     private final ExpenseShareRepository shareRepository;
 
-    public List<BalanceDTO> getBalancesByGroup(Long groupId) {
+    public List<BalanceDTO> getNetBalancesByGroup(Long groupId) {
 
-        List<Expense> expenses = expenseRepository.findByGroupId(groupId);
-        List<BalanceDTO> balances = new ArrayList<>();
+        List<BalanceDTO> rawBalances = getBalancesByGroup(groupId);
 
-        for (Expense expense : expenses) {
+        Map<String, BigDecimal> aggregated = new HashMap<>();
 
-            Long payerId = expense.getUser().getId();
+        for (BalanceDTO b : rawBalances) {
 
-            List<ExpenseShare> shares = shareRepository.findByExpenseId(expense.getId());
+            String key = b.getFromUserId() + "-" + b.getToUserId();
 
-            for (ExpenseShare share : shares) {
-
-                balances.add(
-                        BalanceDTO.builder()
-                                .fromUserId(share.getUser().getId())
-                                .toUserId(payerId)
-                                .amount(share.getAmountOwed())
-                                .build()
-                );
-            }
+            aggregated.put(
+                    key,
+                    aggregated.getOrDefault(key, BigDecimal.ZERO)
+                            .add(b.getAmount())
+            );
         }
 
-        return balances;
+        List<BalanceDTO> result = new ArrayList<>();
+
+        for (Map.Entry<String, BigDecimal> entry : aggregated.entrySet()) {
+
+            String[] parts = entry.getKey().split("-");
+
+            result.add(
+                    BalanceDTO.builder()
+                            .fromUserId(Long.parseLong(parts[0]))
+                            .toUserId(Long.parseLong(parts[1]))
+                            .amount(entry.getValue())
+                            .build()
+            );
+        }
+
+        return result;
     }
 }
