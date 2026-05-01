@@ -14,8 +14,8 @@ public class BalanceController {
 
     private final BalanceService balanceService;
 
-    @GetMapping("/group/{groupId}")
-    public List<BalanceDTO> getBalances(@PathVariable Long groupId) {
-        return balanceService.getBalancesByGroup(groupId);
+    @GetMapping("/group/{groupId}/net")
+    public List<BalanceDTO> getNetBalances(@PathVariable Long groupId) {
+        return balanceService.getNetBalancesByGroup(groupId);
     }
 }
