@@ -4,8 +4,8 @@ import com.akiramoss.expense_tracker.dto.ApiResponse;
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.dto.ExpenseResponseDTO;
 import com.akiramoss.expense_tracker.dto.SplitExpenseRequestDTO;
+import com.akiramoss.expense_tracker.enums.ExpenseCategory;
 import com.akiramoss.expense_tracker.mapper.ExpenseMapper;
-import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.service.ExpenseService;
 import com.akiramoss.expense_tracker.service.ExpenseShareService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +46,7 @@ public class ExpenseController {
     @Operation(summary = "Get expenses by category")
     @GetMapping("/category")
     public List<ExpenseResponseDTO> getByCategory(
-            @RequestParam String category) {
+            @RequestParam ExpenseCategory category) {
 
         return expenseService.getExpensesByCategory(category);
     }
@@ -70,7 +70,7 @@ public class ExpenseController {
     @Operation(summary = "Create shared split expense")
     @PostMapping("/split")
     public ApiResponse<ExpenseResponseDTO> splitExpense(
-            @RequestBody SplitExpenseRequestDTO dto) {
+            @Valid @RequestBody SplitExpenseRequestDTO dto) {
 
         ExpenseResponseDTO result =
                 ExpenseMapper.toDTO(expenseShareService.splitExpense(dto));

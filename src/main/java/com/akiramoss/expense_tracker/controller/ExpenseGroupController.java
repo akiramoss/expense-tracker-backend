@@ -26,7 +26,11 @@ public class ExpenseGroupController {
     }
 
     @GetMapping
-    public List<ExpenseGroup> getAll() {
-        return service.getAllGroups();
+    public ApiResponse<List<ExpenseGroup>> getAll() {
+        return ApiResponse.<List<ExpenseGroup>>builder()
+                .status("success")
+                .message("Groups retrieved")
+                .data(service.getAllGroups())
+                .build();
     }
 }
