@@ -3,7 +3,6 @@ package com.akiramoss.expense_tracker.service;
 import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.dto.ExpenseResponseDTO;
 import com.akiramoss.expense_tracker.enums.ExpenseType;
-import com.akiramoss.expense_tracker.enums.PaymentMethod;
 import com.akiramoss.expense_tracker.mapper.ExpenseMapper;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.model.ExpenseGroup;
@@ -41,8 +40,8 @@ public class ExpenseService {
                 .category(dto.getExpenseCategory())
                 .description(dto.getDescription())
                 .date(dto.getDate())
-                .createdAt(LocalDateTime.now())
-                .paymentMethod(PaymentMethod.valueOf(dto.getPaymentMethod()))
+                .paymentMethod(dto.getPaymentMethod())
+                .type(type)
                 .user(user)
                 .group(group)
                 .build();

@@ -4,5 +4,5 @@ public enum PaymentMethod {
     CASH,
     CARD,
     TRANSFER,
-    BIZUM
+    BIZUM;
 }

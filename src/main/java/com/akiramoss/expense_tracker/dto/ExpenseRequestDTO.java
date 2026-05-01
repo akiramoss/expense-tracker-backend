@@ -1,6 +1,7 @@
 package com.akiramoss.expense_tracker.dto;
 
 import com.akiramoss.expense_tracker.enums.ExpenseCategory;
+import com.akiramoss.expense_tracker.enums.PaymentMethod;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -27,5 +28,5 @@ public class ExpenseRequestDTO {
 
     private Long groupId;
 
-    private String paymentMethod;
+    private PaymentMethod paymentMethod;
 }
