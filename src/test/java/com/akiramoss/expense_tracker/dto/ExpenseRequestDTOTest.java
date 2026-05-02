@@ -29,7 +29,7 @@ class ExpenseRequestDTOTest {
     void shouldFailWhenAmountIsZero() {
         ExpenseRequestDTO dto = new ExpenseRequestDTO();
         dto.setAmount(BigDecimal.ZERO);
-        dto.setExpenseCategory(ExpenseCategory.valueOf("food"));
+        dto.setCategory(ExpenseCategory.valueOf("food"));
         dto.setDate(LocalDate.now());
 
         Set<ConstraintViolation<ExpenseRequestDTO>> violations = validator.validate(dto);
@@ -41,7 +41,7 @@ class ExpenseRequestDTOTest {
     void shouldFailWhenCategoryIsBlank() {
         ExpenseRequestDTO dto = new ExpenseRequestDTO();
         dto.setAmount(BigDecimal.TEN);
-        dto.setExpenseCategory(ExpenseCategory.valueOf(""));
+        dto.setCategory(ExpenseCategory.valueOf(""));
         dto.setDate(LocalDate.now());
 
         Set<ConstraintViolation<ExpenseRequestDTO>> violations = validator.validate(dto);
@@ -53,7 +53,7 @@ class ExpenseRequestDTOTest {
     void shouldPassWithValidData() {
         ExpenseRequestDTO dto = new ExpenseRequestDTO();
         dto.setAmount(BigDecimal.TEN);
-        dto.setExpenseCategory(ExpenseCategory.valueOf("food"));
+        dto.setCategory(ExpenseCategory.valueOf("food"));
         dto.setDate(LocalDate.now());
 
         Set<ConstraintViolation<ExpenseRequestDTO>> violations = validator.validate(dto);

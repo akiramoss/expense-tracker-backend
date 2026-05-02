@@ -1,35 +1,50 @@
 package com.akiramoss.expense_tracker.exception;
 
-import org.springframework.http.HttpStatus;
+import com.akiramoss.expense_tracker.dto.ApiResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiResponse<String>> handleRuntimeException(RuntimeException ex) {
 
-        Map<String, String> errors = new HashMap<>();
-
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-                errors.put(error.getField(), error.getDefaultMessage())
+        return ResponseEntity.badRequest().body(
+                ApiResponse.<String>builder()
+                        .status("error")
+                        .message(ex.getMessage())
+                        .build()
         );
+    }
 
-        return errors;
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<String>> handleValidationException(MethodArgumentNotValidException ex) {
+
+        String errorMessage = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .findFirst()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .orElse("Validation error");
+
+        return ResponseEntity.badRequest().body(
+                ApiResponse.<String>builder()
+                        .status("error")
+                        .message(errorMessage)
+                        .build()
+        );
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Map<String, String> handleGeneralException(Exception ex) {
+    public ResponseEntity<ApiResponse<String>> handleGenericException(Exception ex) {
 
-        Map<String, String> error = new HashMap<>();
-        error.put("error", ex.getMessage());
-
-        return error;
+        return ResponseEntity.internalServerError().body(
+                ApiResponse.<String>builder()
+                        .status("error")
+                        .message("Unexpected error occurred")
+                        .build()
+        );
     }
 }

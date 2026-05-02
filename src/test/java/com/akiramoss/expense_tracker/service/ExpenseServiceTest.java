@@ -33,12 +33,12 @@ class ExpenseServiceTest {
         // DTO input
         ExpenseRequestDTO dto = new ExpenseRequestDTO();
         dto.setAmount(BigDecimal.valueOf(20));
-        dto.setExpenseCategory(ExpenseCategory.valueOf("food"));
+        dto.setCategory(ExpenseCategory.valueOf("food"));
         dto.setDescription("pizza");
         dto.setDate(LocalDate.now());
         dto.setUserId(1L);
         dto.setGroupId(1L);
-        dto.setPaymentMethod("card");
+        dto.setPaymentMethod(PaymentMethod.valueOf("card"));
 
         // Fake User
         User user = User.builder()
@@ -56,10 +56,10 @@ class ExpenseServiceTest {
         Expense savedExpense = Expense.builder()
                 .id(1L)
                 .amount(dto.getAmount())
-                .category(ExpenseCategory.valueOf(dto.getExpenseCategory().name()))
+                .category(ExpenseCategory.valueOf(dto.getCategory().name()))
                 .description(dto.getDescription())
                 .date(dto.getDate())
-                .paymentMethod(PaymentMethod.valueOf(dto.getPaymentMethod()))
+                .paymentMethod(dto.getPaymentMethod())
                 .user(user)
                 .group(group)
                 .build();
