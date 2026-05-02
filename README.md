@@ -1,80 +1,164 @@
-# 💰 Expense Tracker API
+# 💸 Expense Tracker API
 
-Backend API built with **Java, Spring Boot, MySQL and Docker** for managing personal expenses.
+Backend RESTful para la gestión de gastos personales y compartidos, inspirado en aplicaciones como Splitwise.
 
 ---
 
 ## 🚀 Features
 
-- Create, read and filter expenses
-- RESTful API with clean architecture
-- DTO-based design (no entity exposure)
-- Global API response structure
-- Input validation & exception handling
-- Swagger documentation
-- Dockerized application (backend + MySQL)
-- Unit testing with JUnit + Mockito
+* Registro y autenticación de usuarios (JWT)
+* Creación de gastos personales
+* Creación de grupos de gastos
+* División de gastos entre múltiples usuarios
+* Cálculo de balances entre usuarios
+* API documentada con Swagger
+* Manejo global de errores
+* Tests unitarios con JUnit y Mockito
 
 ---
 
-## 🏗️ Tech Stack
+## 🏗️ Arquitectura
 
-- Java 21+
-- Spring Boot
-- Spring Data JPA
-- MySQL
-- Docker & Docker Compose
-- Maven
-- Swagger (OpenAPI)
-- JUnit + Mockito
+El proyecto sigue una arquitectura en capas:
 
----
+```
+controller → service → repository → database
+```
 
-## 📦 Architecture
+### 📦 Capas
 
-Layered architecture:
-
-Includes:
-
-- DTOs for request/response
-- Mapper layer for separation of concerns
-- Global exception handling
+* **Controller** → expone endpoints REST
+* **Service** → lógica de negocio
+* **Repository** → acceso a datos (JPA)
+* **Model** → entidades del dominio
+* **DTO** → contratos de entrada/salida
+* **Mapper** → conversión entre entidades y DTOs
 
 ---
 
-## ⚙️ How to Run
+## 🧠 Decisiones de diseño
 
-### 1. Clone repo
+* Uso de **DTOs** para desacoplar la API del modelo interno
+* Separación clara de responsabilidades (SOLID)
+* Uso de **Enums** para consistencia del dominio
+* Manejo centralizado de errores con `@RestControllerAdvice`
+* Tests unitarios enfocados en lógica de negocio
+* Contenerización con Docker para entorno reproducible
+
+---
+
+## 🛠️ Tecnologías
+
+* Java 21
+* Spring Boot 3
+* Spring Data JPA
+* Spring Security
+* MySQL (Docker)
+* JWT (io.jsonwebtoken)
+* Swagger (OpenAPI)
+* Maven
+* JUnit + Mockito
+
+---
+
+## 🐳 Setup con Docker
+
+### 1. Levantar base de datos
 
 ```bash
-git clone <repo-url>
-docker-compose up --build
+docker-compose up -d
 ```
 
-### 2. Acces API
+### 2. Ejecutar aplicación
 
-http://localhost:8080
+```bash
+mvn spring-boot:run
+```
 
-### 3. Swagger
+---
 
+## 📖 API Documentation
+
+Disponible en:
+
+```
 http://localhost:8080/swagger-ui/index.html
-
-### 4. Example API
-
-POST /api/expenses
-
-```JSON
-{
-  "amount": 25.50,
-  "category": "food",
-  "description": "pizza",
-  "date": "2026-04-13"
-}
 ```
 
-## ⚙🏗️ Key Design Decisions
+---
 
-- DTOs used to decouple API from database
-- Service layer isolates business logic
-- Global response wrapper for consistency
-- Docker for reproducibility across environments
+## 🔑 Endpoints principales
+
+### Auth
+
+```
+POST /api/auth/register
+POST /api/auth/login
+```
+
+---
+
+### Expenses
+
+```
+POST /api/expenses
+GET /api/expenses
+GET /api/expenses/user/{userId}
+GET /api/expenses/group/{groupId}
+```
+
+---
+
+### Split Expenses
+
+```
+POST /api/expenses/split
+```
+
+---
+
+### Groups
+
+```
+POST /api/groups
+GET /api/groups
+```
+
+---
+
+### Balances
+
+```
+GET /api/balances/group/{groupId}/net
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+mvn test
+```
+
+Incluye tests para:
+
+* ExpenseService
+* ExpenseShareService
+* JwtService
+* BalanceService
+
+---
+
+## 📊 Ejemplo de flujo
+
+1. Crear usuario
+2. Crear grupo
+3. Añadir gasto compartido
+4. Dividir gasto
+5. Consultar balances
+
+---
+
+## 👤 Autor: Iñaki Ramos Iturria
+
+Desarrollado como proyecto de portfolio enfocado en backend engineering.
