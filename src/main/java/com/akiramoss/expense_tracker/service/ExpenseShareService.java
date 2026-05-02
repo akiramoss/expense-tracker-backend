@@ -2,6 +2,7 @@ package com.akiramoss.expense_tracker.service;
 
 import com.akiramoss.expense_tracker.dto.SplitExpenseRequestDTO;
 import com.akiramoss.expense_tracker.enums.ExpenseType;
+import com.akiramoss.expense_tracker.exception.UserNotFoundException;
 import com.akiramoss.expense_tracker.model.*;
 import com.akiramoss.expense_tracker.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +55,7 @@ public class ExpenseShareService {
             }
 
             User participant = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new UserNotFoundException("User not found"));
 
             ExpenseShare share = ExpenseShare.builder()
                     .expense(savedExpense)

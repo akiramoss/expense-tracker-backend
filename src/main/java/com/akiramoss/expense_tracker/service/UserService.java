@@ -2,6 +2,8 @@ package com.akiramoss.expense_tracker.service;
 
 import com.akiramoss.expense_tracker.dto.RegisterRequestDTO;
 import com.akiramoss.expense_tracker.dto.UserResponseDTO;
+import com.akiramoss.expense_tracker.exception.EmailAlreadyExistsException;
+import com.akiramoss.expense_tracker.exception.UsernameAlreadyExistsException;
 import com.akiramoss.expense_tracker.model.User;
 import com.akiramoss.expense_tracker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +20,11 @@ public class UserService {
     public UserResponseDTO register(RegisterRequestDTO dto) {
 
         if (userRepository.existsByUsername(dto.getUsername())) {
-            throw new RuntimeException("Username already exists");
+            throw new UsernameAlreadyExistsException("Username already exists");
         }
 
         if (userRepository.existsByEmail(dto.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new EmailAlreadyExistsException("Email already exists");
         }
 
         User user = User.builder()

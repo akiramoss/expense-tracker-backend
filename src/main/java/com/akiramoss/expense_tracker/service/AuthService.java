@@ -2,6 +2,8 @@ package com.akiramoss.expense_tracker.service;
 
 import com.akiramoss.expense_tracker.config.JwtService;
 import com.akiramoss.expense_tracker.dto.LoginRequestDTO;
+import com.akiramoss.expense_tracker.exception.InvalidPasswordException;
+import com.akiramoss.expense_tracker.exception.UserNotFoundException;
 import com.akiramoss.expense_tracker.model.User;
 import com.akiramoss.expense_tracker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +21,10 @@ public class AuthService {
     public String login(LoginRequestDTO dto) {
 
         User user = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new InvalidPasswordException("Invalid password");
         }
 
         return jwtService.generateToken(user.getUsername());

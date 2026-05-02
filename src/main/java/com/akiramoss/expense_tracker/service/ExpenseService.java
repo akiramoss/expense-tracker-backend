@@ -4,6 +4,7 @@ import com.akiramoss.expense_tracker.dto.ExpenseRequestDTO;
 import com.akiramoss.expense_tracker.dto.ExpenseResponseDTO;
 import com.akiramoss.expense_tracker.enums.ExpenseCategory;
 import com.akiramoss.expense_tracker.enums.ExpenseType;
+import com.akiramoss.expense_tracker.exception.GroupNotFoundException;
 import com.akiramoss.expense_tracker.mapper.ExpenseMapper;
 import com.akiramoss.expense_tracker.model.Expense;
 import com.akiramoss.expense_tracker.model.ExpenseGroup;
@@ -12,7 +13,9 @@ import com.akiramoss.expense_tracker.repository.ExpenseGroupRepository;
 import com.akiramoss.expense_tracker.repository.ExpenseRepository;
 import com.akiramoss.expense_tracker.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.GroupDefinitionException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -79,7 +82,7 @@ public class ExpenseService {
 
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     private ExpenseGroup findGroupIfPresent(Long groupId) {
@@ -89,6 +92,6 @@ public class ExpenseService {
         }
 
         return groupRepository.findById(groupId)
-                .orElseThrow(() -> new RuntimeException("Group not found"));
+                .orElseThrow(() -> new GroupNotFoundException("Group not found"));
     }
 }

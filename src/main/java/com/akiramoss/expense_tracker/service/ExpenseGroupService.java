@@ -6,6 +6,7 @@ import com.akiramoss.expense_tracker.model.User;
 import com.akiramoss.expense_tracker.repository.ExpenseGroupRepository;
 import com.akiramoss.expense_tracker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ public class ExpenseGroupService {
     public ExpenseGroup createGroup(ExpenseGroupRequestDTO dto) {
 
         User owner = userRepository.findById(dto.getOwnerId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         ExpenseGroup group = ExpenseGroup.builder()
                 .name(dto.getName())
